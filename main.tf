@@ -2,13 +2,14 @@ locals {
   environment = {
     NAMESPACE     = var.namespace,
     HOSTNAME      = var.hostname,
-    REPO_URL      = local.repo_url,
+    REPO_URL      = local.url,
     ACCESS_TOKEN  = local.token,
     RUNNER_GROUP  = var.runner_group == null ? "" : var.runner_group,
-    RUNNER_LABELS = var.runner_labels,
+    RUNNER_LABELS = join(",", var.runner_labels),
   }
-  ecs_environment = [for k, v in local.environment : { name = k, value = v }]
+  ecs_environment = jsonencode([for k, v in local.environment : { name = k, value = v }])
 }
+
 resource "aws_iam_role" "ecs_task_role" {
   name = "${var.namespace}-EcsTaskRole"
 
@@ -28,6 +29,12 @@ resource "aws_iam_role" "ecs_task_role" {
     ]
   })
 
+}
+
+resource "null_resource" "echo" {
+  provisioner "local-exec" {
+    command = "echo ${jsonencode(local.ecs_environment)} | jq"
+  }
 }
 
 resource "aws_iam_role" "ecs_task_execution_role" {
@@ -66,22 +73,20 @@ resource "aws_ecs_task_definition" "runner_task_definition" {
   task_role_arn            = aws_iam_role.ecs_task_role.arn
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
 
-  container_definitions = jsonencode([
-    {
-      name        = var.namespace
-      image       = var.image
-      essential   = true
-      cpu         = 2048
-      memory      = 4096
-      environment = local.ecs_environment
-      log_configuration = {
-        logDriver = "awslogs"
-        options = {
-          awslogs-group         = aws_cloudwatch_log_group.function_log_group.name
-          awslogs-region        = data.aws_region.current.name
-          awslogs-stream-prefix = var.tag
-        }
+  container_definitions = templatefile("${path.module}/container_definitions.json.tpl", {
+    name        = var.namespace
+    image       = var.image
+    essential   = true
+    cpu         = 2048
+    memory      = 4096
+    environment = tostring(local.ecs_environment)
+    log_configuration = jsonencode({
+      logDriver = "awslogs"
+      options = {
+        awslogs-group         = aws_cloudwatch_log_group.function_log_group.name
+        awslogs-region        = data.aws_region.current.name
+        awslogs-stream-prefix = var.tag
       }
-    }
-  ])
+    })
+  })
 }

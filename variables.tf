@@ -84,7 +84,7 @@ variable "memory" {
 variable "runner_group_visibility" {
   description = "The visibility of the runner group"
   type        = string
-  default     = "private"
+  default     = "selected"
 
   validation {
     condition     = contains(["all", "selected"], var.runner_group_visibility)
@@ -106,10 +106,10 @@ variable "selected_repository_ids" {
 variable "selected_workflows" {
   description = "The list of workflows to which the runner group is restricted"
   type        = list(string)
-  default     = null
+  default     = []
 
   validation {
-    condition     = var.selected_workflows == null || length(var.selected_workflows) >= 0
+    condition     = length(var.selected_workflows) >= 0
     error_message = "The selected_workflows variable must be null or a list of strings."
   }
 }
@@ -131,8 +131,8 @@ variable "repo_name" {
   default     = null
 
   validation {
-    condition     = var.repo_name == null || length(var.repo_name) > 0
-    error_message = "The repo_name variable must be null or a non-empty string."
+    condition     = can(regex("^[a-zA-Z0-9-_]+$", var.repo_name)) || var.repo_name == null
+    error_message = "The repo_name variable must not be empty and can only contain alphanumeric characters, hyphens, and underscores."
   }
 }
 
@@ -175,5 +175,16 @@ variable "desired_count" {
   validation {
     condition     = var.desired_count > 0
     error_message = "The desired_count variable must be greater than 0."
+  }
+}
+
+variable "create_runner_group" {
+  description = "Flag to determine whether to create a new runner group"
+  type        = bool
+  default     = false
+
+  validation {
+    condition     = var.create_runner_group == true || var.create_runner_group == false
+    error_message = "The create_runner_group variable must be a boolean."
   }
 }

@@ -1,9 +1,10 @@
 
 resource "github_actions_runner_group" "example" {
+  count                      = var.runner_group == null && var.create_runner_group ? 0 : 1
   name                       = var.namespace
   visibility                 = var.runner_group_visibility
   selected_repository_ids    = var.selected_repository_ids
-  restricted_to_workflows    = var.selected_workflows == null ? false : true
+  restricted_to_workflows    = var.selected_workflows == [] ? false : true
   selected_workflows         = var.selected_workflows
   allows_public_repositories = var.allows_public_repositories
 }
@@ -31,8 +32,9 @@ data "github_rest_api" "org" {
 }
 
 locals {
-  org_token  = one(data.github_actions_organization_registration_token.token).token
-  repo_token = one(data.github_actions_registration_token.token).token
-  token      = var.repo_name == null ? local.org_token : local.repo_token
-  repo_url   = var.repo_name == null ? one(data.github_rest_api.org).url : one(data.github_repository.repo).html_url
+  token = coalesce(
+    one(data.github_actions_organization_registration_token.token),
+    one(data.github_actions_registration_token.token)
+  ).token
+  url = var.repo_name == null ? jsondecode(data.github_rest_api.org.body).html_url : one(data.github_repository.repo).html_url
 }

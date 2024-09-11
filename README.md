@@ -40,7 +40,6 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_access_token"></a> [access\_token](#input\_access\_token) | The access token for authentication | `string` | n/a | yes |
 | <a name="input_allows_public_repositories"></a> [allows\_public\_repositories](#input\_allows\_public\_repositories) | Whether the runner group allows public repositories | `bool` | `false` | no |
 | <a name="input_cpu"></a> [cpu](#input\_cpu) | The number of CPU units used by the task | `string` | `2048` | no |
 | <a name="input_desired_count"></a> [desired\_count](#input\_desired\_count) | The desired number of tasks for the ECS service | `number` | `3` | no |
@@ -51,9 +50,7 @@ No modules.
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | The namespace for the runner | `string` | n/a | yes |
 | <a name="input_repo_name"></a> [repo\_name](#input\_repo\_name) | The name of the repository | `string` | `null` | no |
 | <a name="input_repo_org"></a> [repo\_org](#input\_repo\_org) | The organization of the repository | `string` | `null` | no |
-| <a name="input_repo_url"></a> [repo\_url](#input\_repo\_url) | The repository URL | `string` | n/a | yes |
 | <a name="input_runner_group"></a> [runner\_group](#input\_runner\_group) | The runner group | `string` | n/a | yes |
-| <a name="input_runner_group_visbility"></a> [runner\_group\_visbility](#input\_runner\_group\_visbility) | The visibility of the runner group | `string` | `"selected"` | no |
 | <a name="input_runner_group_visibility"></a> [runner\_group\_visibility](#input\_runner\_group\_visibility) | The visibility of the runner group | `string` | `"private"` | no |
 | <a name="input_runner_labels"></a> [runner\_labels](#input\_runner\_labels) | The labels for the runner | `list(string)` | n/a | yes |
 | <a name="input_selected_repository_ids"></a> [selected\_repository\_ids](#input\_selected\_repository\_ids) | The list of repository IDs to which the runner group is restricted | `list(string)` | `[]` | no |

@@ -15,7 +15,7 @@ data "github_repository" "repo" {
 
 data "github_actions_registration_token" "token" {
   count      = var.repo_name == null ? 0 : 1
-  repository = data.github_repository.repo.name
+  repository = one(data.github_repository.repo).name
 }
 
 data "github_actions_organization_registration_token" "token" {
@@ -31,8 +31,8 @@ data "github_rest_api" "org" {
 }
 
 locals {
-  org_token  = data.github_actions_organization_registration_token.token.token
-  repo_token = data.github_actions_registration_token.token.token
+  org_token  = one(data.github_actions_organization_registration_token.token).token
+  repo_token = one(data.github_actions_registration_token.token).token
   token      = var.repo_name == null ? local.org_token : local.repo_token
-  repo_url   = var.repo_name == null ? data.github_rest_api.org.url : data.github_repository.repo.html_url
+  repo_url   = var.repo_name == null ? one(data.github_rest_api.org).url : one(data.github_repository.repo).html_url
 }

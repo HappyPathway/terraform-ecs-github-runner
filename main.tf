@@ -9,8 +9,47 @@ locals {
   }
   ecs_environment = [for k, v in local.environment : { name = k, value = v }]
 }
+resource "aws_iam_role" "ecs_task_role" {
+  name = "${var.namespace}-EcsTaskRole"
 
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = "ecs-tasks.amazonaws.com"
+        }
+        Action = [
+          "sts:AssumeRole",
+          "sts:TagSession"
+        ]
+      }
+    ]
+  })
+}
 
+resource "aws_iam_role" "ecs_task_execution_role" {
+  name = "${var.namespace}-EcsTaskExecutionRole"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = ""
+        Effect = "Allow"
+        Principal = {
+          Service = "ecs-tasks.amazonaws.com"
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+
+  managed_policy_arns = [
+    "arn:${data.aws_partition.current.partition}:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+  ]
+}
 
 resource "aws_cloudwatch_log_group" "function_log_group" {
   name              = "/aws/lambda/${var.namespace}"

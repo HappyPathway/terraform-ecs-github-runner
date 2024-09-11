@@ -6,7 +6,11 @@ on:
   push:
     branches:
       - main
-    
+
+env:
+    AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
 jobs:
   terraform:
     uses: HappyPathway/centralized-actions/.github/workflows/terraform-test.yml@main

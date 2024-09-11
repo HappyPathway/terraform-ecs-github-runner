@@ -50,7 +50,7 @@ No modules.
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | The namespace for the runner | `string` | n/a | yes |
 | <a name="input_repo_name"></a> [repo\_name](#input\_repo\_name) | The name of the repository | `string` | `null` | no |
 | <a name="input_repo_org"></a> [repo\_org](#input\_repo\_org) | The organization of the repository | `string` | `null` | no |
-| <a name="input_runner_group"></a> [runner\_group](#input\_runner\_group) | The runner group | `string` | n/a | yes |
+| <a name="input_runner_group"></a> [runner\_group](#input\_runner\_group) | The runner group | `string` | `null` | no |
 | <a name="input_runner_group_visibility"></a> [runner\_group\_visibility](#input\_runner\_group\_visibility) | The visibility of the runner group | `string` | `"private"` | no |
 | <a name="input_runner_labels"></a> [runner\_labels](#input\_runner\_labels) | The labels for the runner | `list(string)` | n/a | yes |
 | <a name="input_selected_repository_ids"></a> [selected\_repository\_ids](#input\_selected\_repository\_ids) | The list of repository IDs to which the runner group is restricted | `list(string)` | `[]` | no |

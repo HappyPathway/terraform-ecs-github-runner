@@ -4,7 +4,7 @@ locals {
     HOSTNAME      = var.hostname,
     REPO_URL      = local.repo_url,
     ACCESS_TOKEN  = local.token,
-    RUNNER_GROUP  = var.runner_group,
+    RUNNER_GROUP  = var.runner_group == null ? "" : var.runner_group,
     RUNNER_LABELS = var.runner_labels,
   }
   ecs_environment = [for k, v in local.environment : { name = k, value = v }]
@@ -27,6 +27,7 @@ resource "aws_iam_role" "ecs_task_role" {
       }
     ]
   })
+
 }
 
 resource "aws_iam_role" "ecs_task_execution_role" {

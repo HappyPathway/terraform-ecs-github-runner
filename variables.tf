@@ -31,10 +31,11 @@ variable "namespace" {
 variable "runner_group" {
   description = "The runner group"
   type        = string
+  default     = null
 
   validation {
-    condition     = length(var.runner_group) > 0
-    error_message = "The runner_group variable must not be empty."
+    condition     = can(regex("^[a-zA-Z0-9-_]+$", var.runner_group))
+    error_message = "The runner_group variable must not be empty and can only contain alphanumeric characters, hyphens, and underscores."
   }
 }
 

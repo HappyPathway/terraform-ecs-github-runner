@@ -2,15 +2,15 @@ locals {
   environment = {
     NAMESPACE     = var.namespace,
     HOSTNAME      = var.hostname,
-    REPO_URL      = var.repo_url,
-    ACCESS_TOKEN  = var.access_token,
+    REPO_URL      = local.repo_url,
+    ACCESS_TOKEN  = local.token,
     RUNNER_GROUP  = var.runner_group,
     RUNNER_LABELS = var.runner_labels,
   }
   ecs_environment = [for k, v in local.environment : { name = k, value = v }]
 }
 
-data "aws_region" "current" {}
+
 
 resource "aws_cloudwatch_log_group" "function_log_group" {
   name              = "/aws/lambda/${var.namespace}"

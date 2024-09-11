@@ -1,14 +1,3 @@
-variable "access_token" {
-  description = "The access token for authentication"
-  type        = string
-  sensitive   = true
-
-  validation {
-    condition     = length(var.access_token) > 0
-    error_message = "The access_token variable must not be empty."
-  }
-}
-
 variable "hostname" {
   description = "The hostname for the runner"
   type        = string
@@ -36,16 +25,6 @@ variable "namespace" {
   validation {
     condition     = length(var.namespace) > 0
     error_message = "The namespace variable must not be empty."
-  }
-}
-
-variable "repo_url" {
-  description = "The repository URL"
-  type        = string
-
-  validation {
-    condition     = length(var.repo_url) > 0
-    error_message = "The repo_url variable must not be empty."
   }
 }
 
@@ -164,17 +143,6 @@ variable "repo_org" {
   validation {
     condition     = var.repo_org == null || length(var.repo_org) > 0
     error_message = "The repo_org variable must be null or a non-empty string."
-  }
-}
-
-variable "runner_group_visbility" {
-  description = "The visibility of the runner group"
-  type        = string
-  default     = "selected"
-
-  validation {
-    condition     = contains(["all", "selected"], var.runner_group_visbility)
-    error_message = "The runner_group_visibility variable must be either 'all' or 'selected'."
   }
 }
 

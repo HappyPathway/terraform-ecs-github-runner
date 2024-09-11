@@ -1,7 +1,7 @@
 
 resource "github_actions_runner_group" "example" {
   name                       = var.namespace
-  visibility                 = var.runner_group_visbility
+  visibility                 = var.runner_group_visibility
   selected_repository_ids    = var.selected_repository_ids
   restricted_to_workflows    = var.selected_workflows == null ? false : true
   selected_workflows         = var.selected_workflows

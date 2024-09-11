@@ -7,13 +7,9 @@ on:
     branches:
       - main
 
-env:
-    AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
-    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      
 jobs:
   terraform:
-    uses: HappyPathway/centralized-actions/.github/workflows/terraform-test.yml@main
+    uses: HappyPathway/centralized-actions/.github/workflows/terraform-test.yml@aws
     with:
       terraform_version: ${{vars.TERRAFORM_VERSION}}
       terraform_api: ${{vars.TERRAFORM_API}}
@@ -23,6 +19,8 @@ jobs:
     secrets:
       TFE_TOKEN: ${{ secrets.TFE_TOKEN }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   gtag:
     if: ${{ github.event_name }} != "pull_request"

@@ -9,19 +9,20 @@ on:
 
 jobs:
   terraform:
-    uses: HappyPathway/centralized-actions/.github/workflows/terraform-test.yml@aws
+    uses: HappyPathway/centralized-actions/.github/workflows/terraform-test.yml@aws-v1.0.0
     with:
       terraform_version: ${{vars.TERRAFORM_VERSION}}
       terraform_api: ${{vars.TERRAFORM_API}}
       github_username: ${{vars.GH_USERNAME}}
       github_email: ${{vars.GH_EMAIL}}
       github_org: ${{ vars.GH_ORG }}
-      AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+      aws_access_key_id: ${{ vars.AWS_ACCESS_KEY_ID }}
+      aws_region: us-east-1
     secrets:
       TFE_TOKEN: ${{ secrets.TFE_TOKEN }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
   gtag:
     if: ${{ github.event_name }} != "pull_request"
     needs: terraform

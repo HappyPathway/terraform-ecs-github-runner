@@ -1,6 +1,6 @@
 
 resource "github_actions_runner_group" "example" {
-  count                      = var.runner_group == null && var.runner_group.create ? 0 : 1
+  count                      = var.runner_group.create ? 0 : 1
   name                       = var.namespace
   visibility                 = var.runner_group.visibility
   selected_repository_ids    = var.runner_group.selected_repository_ids

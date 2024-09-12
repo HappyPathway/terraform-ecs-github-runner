@@ -137,7 +137,7 @@ variable "runner_group" {
   })
 
   validation {
-    condition     = var.runner_group == {} || can(regex("^[a-zA-Z0-9-_]+$", var.runner_group.name))
+    condition     = var.runner_group.name == null || can(regex("^[a-zA-Z0-9-_]+$", var.runner_group.name))
     error_message = "The runner_group variable must not be empty and can only contain alphanumeric characters, hyphens, and underscores."
   }
 

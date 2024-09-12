@@ -1,10 +1,10 @@
 # valid_string_concat.tftest.hcl
 variables {
-  hostname      = "test-hostname"
-  image         = "test-image"
-  namespace     = "test-namespace"
-  runner_group  = {
-    name = "test-runner-group"
+  hostname  = "test-hostname"
+  image     = "test-image"
+  namespace = "test-namespace"
+  runner_group = {
+    name   = "test-runner-group"
     create = false
   }
   runner_labels = ["test-runner-labels"]

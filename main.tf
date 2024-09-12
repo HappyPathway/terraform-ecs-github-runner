@@ -65,7 +65,6 @@ resource "aws_ecs_task_definition" "runner_task_definition" {
   memory                   = var.memory
   task_role_arn            = aws_iam_role.ecs_task_role.arn
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
-
   container_definitions = templatefile("${path.module}/container_definitions.json.tpl", {
     name        = var.namespace
     image       = var.image

@@ -15,7 +15,7 @@ data "github_repository" "repo" {
 }
 
 data "github_actions_registration_token" "token" {
-  count      = var.repo_name == null ? 0 : 1
+  for_each   = var.repo_name == null ? toset([]) : toset([var.repo_name])
   repository = one(data.github_repository.repo).name
 }
 

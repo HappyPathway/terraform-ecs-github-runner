@@ -126,9 +126,9 @@ variable "desired_count" {
 
 variable "runner_group" {
   description = "Configuration for the GitHub runner group, including name, visibility, selected workflows, selected repository IDs, and whether public repositories are allowed."
-  default     = null
+  default     = {}
   type = object({
-    name                       = string
+    name                       = optional(string)
     visibility                 = optional(string, "selected")
     selected_workflows         = optional(list(string), [])
     selected_repository_ids    = optional(list(string), [])

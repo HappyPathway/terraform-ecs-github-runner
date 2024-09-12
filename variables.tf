@@ -137,32 +137,32 @@ variable "runner_group" {
   })
 
   validation {
-    condition     = can(regex("^[a-zA-Z0-9-_]+$", var.runner_group.name))
+    condition     = var.runner_group == {} || can(regex("^[a-zA-Z0-9-_]+$", var.runner_group.name))
     error_message = "The runner_group variable must not be empty and can only contain alphanumeric characters, hyphens, and underscores."
   }
 
   validation {
-    condition     = var.runner_group.allows_public_repositories == true || var.runner_group.allows_public_repositories == false
+    condition     = var.runner_group == {} || var.runner_group.allows_public_repositories == true || var.runner_group.allows_public_repositories == false
     error_message = "The allows_public_repositories variable must be a boolean."
   }
 
   validation {
-    condition     = length(var.runner_group.selected_workflows) >= 0
+    condition     = var.runner_group == {} || length(var.runner_group.selected_workflows) >= 0
     error_message = "The selected_workflows variable must be null or a list of strings."
   }
 
   validation {
-    condition     = length(var.runner_group.selected_repository_ids) >= 0
+    condition     = var.runner_group == {} || length(var.runner_group.selected_repository_ids) >= 0
     error_message = "The selected_repository_ids variable must be a list of strings."
   }
 
   validation {
-    condition     = contains(["all", "selected"], var.runner_group.visibility)
+    condition     = var.runner_group == {} || contains(["all", "selected"], var.runner_group.visibility)
     error_message = "The visibility variable must be either 'all' or 'selected'."
   }
 
   validation {
-    condition     = var.runner_group.create == true || var.runner_group.create == false
+    condition     = var.runner_group == {} || var.runner_group.create == true || var.runner_group.create == false
     error_message = "The create_runner_group variable must be a boolean."
   }
 }

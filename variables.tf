@@ -167,3 +167,27 @@ variable "runner_group" {
   }
 }
 
+variable "network_configuration" {
+  description = "The list of security groups for the ECS service"
+  type = object({
+    security_groups  = list(string)
+    subnets          = list(string)
+    assign_public_ip = bool
+  })
+  default = {}
+
+  validation {
+    condition     = var.network_configuration == {} || var.network_configuration.assign_public_ip == true || var.network_configuration.assign_public_ip == false
+    error_message = "The assign_public_ip variable must be a boolean."
+  }
+
+  validation {
+    condition     = var.network_configuration == {} || length(var.network_configuration.security_groups) > 0
+    error_message = "The security_groups variable must not be empty."
+  }
+
+  validation {
+    condition     = var.network_configuration == {} || length(var.network_configuration.subnets) > 0
+    error_message = "The subnets variable must not be empty."
+  }
+}

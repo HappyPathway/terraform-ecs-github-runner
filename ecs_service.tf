@@ -13,13 +13,12 @@ resource "aws_ecs_service" "github-runner" {
     field = "cpu"
   }
 
-  placement_constraints {
-    type       = "memberOf"
-    expression = "attribute:ecs.region in [${data.aws_region.current.name}]"
-  }
-
-  placement_constraints {
-    type       = "memberOf"
-    expression = "attribute:ecs.subnet in [${join(",", var.subnets)}]"
+  dynamic "network_configuration" {
+    for_each = var.network_configuration == null ? [] : [var.network_configuration]
+    content {
+      subnets          = network_configuration.value.subnets
+      security_groups  = network_configuration.value.security_groups
+      assign_public_ip = network_configuration.value.assign_public_ip
+    }
   }
 }

@@ -187,7 +187,7 @@ variable "network_configuration" {
   }
 
   validation {
-    condition     = var.network_configuration == {} || lengt(var.network_configuration.subnets) == 0 || [for subnet in var.network_configuration.subnets : can(regex("subnet-[a-f0-9]{8}", subnet))]
+    condition     = var.network_configuration == {} || length(var.network_configuration.subnets) == 0 || [for subnet in var.network_configuration.subnets : can(regex("subnet-[a-f0-9]{8}", subnet))]
     error_message = "The subnets variable contains an invalid subnet ID."
   }
 }

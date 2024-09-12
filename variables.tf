@@ -182,12 +182,12 @@ variable "network_configuration" {
   }
 
   validation {
-    condition     = var.network_configuration == {} || length(var.network_configuration.security_groups) == 0 || [for sg in var.network_configuration.security_groups : can(regex("sg-[a-f0-9]{17}", sg))]
+    condition     = var.network_configuration == {} || length(var.network_configuration.security_groups) == 0 || length([for sg in var.network_configuration.security_groups : can(regex("sg-[a-f0-9]{17}", sg))]) > 0
     error_message = "The security_groups variable contains an invalid security group ID."
   }
 
   validation {
-    condition     = var.network_configuration == {} || length(var.network_configuration.subnets) == 0 || [for subnet in var.network_configuration.subnets : can(regex("subnet-[a-f0-9]{8}", subnet))]
+    condition     = var.network_configuration == {} || length(var.network_configuration.subnets) == 0 || length([for subnet in var.network_configuration.subnets : can(regex("subnet-[a-f0-9]{8}", subnet))]) > 0
     error_message = "The subnets variable contains an invalid subnet ID."
   }
 }

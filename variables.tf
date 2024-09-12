@@ -170,9 +170,9 @@ variable "runner_group" {
 variable "network_configuration" {
   description = "The list of security groups for the ECS service"
   type = object({
-    security_groups  = list(string)
-    subnets          = list(string)
-    assign_public_ip = bool
+    security_groups  = optional(list(string), [])
+    subnets          = optional(list(string), [])
+    assign_public_ip = optional(bool, false)
   })
   default = {}
 
@@ -182,12 +182,12 @@ variable "network_configuration" {
   }
 
   validation {
-    condition     = var.network_configuration == {} || length(var.network_configuration.security_groups) > 0
-    error_message = "The security_groups variable must not be empty."
+    condition     = var.network_configuration == {} || [for sg in var.network_configuration.security_groups : can(regex("sg-[a-f0-9]{17}", sg))]
+    error_message = "The security_groups variable contains an invalid security group ID."
   }
 
   validation {
-    condition     = var.network_configuration == {} || length(var.network_configuration.subnets) > 0
-    error_message = "The subnets variable must not be empty."
+    condition     = var.network_configuration == {} || [for subnet in var.network_configuration.subnets : can(regex("subnet-[a-f0-9]{8}", subnet))]
+    error_message = "The subnets variable contains an invalid subnet ID."
   }
 }

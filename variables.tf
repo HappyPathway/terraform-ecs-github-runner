@@ -28,17 +28,6 @@ variable "namespace" {
   }
 }
 
-variable "runner_group" {
-  description = "The runner group"
-  type        = string
-  default     = null
-
-  validation {
-    condition     = can(regex("^[a-zA-Z0-9-_]+$", var.runner_group))
-    error_message = "The runner_group variable must not be empty and can only contain alphanumeric characters, hyphens, and underscores."
-  }
-}
-
 variable "runner_labels" {
   description = "The labels for the runner"
   type        = list(string)
@@ -78,50 +67,6 @@ variable "memory" {
   validation {
     condition     = can(regex("^[0-9]+$", var.memory))
     error_message = "The memory variable must be a numeric string."
-  }
-}
-
-variable "runner_group_visibility" {
-  description = "The visibility of the runner group"
-  type        = string
-  default     = "selected"
-
-  validation {
-    condition     = contains(["all", "selected"], var.runner_group_visibility)
-    error_message = "The runner_group_visibility variable must be either 'all' or 'selected'."
-  }
-}
-
-variable "selected_repository_ids" {
-  description = "The list of repository IDs to which the runner group is restricted"
-  type        = list(string)
-  default     = []
-
-  validation {
-    condition     = length(var.selected_repository_ids) >= 0
-    error_message = "The selected_repository_ids variable must be a list of strings."
-  }
-}
-
-variable "selected_workflows" {
-  description = "The list of workflows to which the runner group is restricted"
-  type        = list(string)
-  default     = []
-
-  validation {
-    condition     = length(var.selected_workflows) >= 0
-    error_message = "The selected_workflows variable must be null or a list of strings."
-  }
-}
-
-variable "allows_public_repositories" {
-  description = "Whether the runner group allows public repositories"
-  type        = bool
-  default     = false
-
-  validation {
-    condition     = var.allows_public_repositories == true || var.allows_public_repositories == false
-    error_message = "The allows_public_repositories variable must be a boolean."
   }
 }
 
@@ -178,13 +123,47 @@ variable "desired_count" {
   }
 }
 
-variable "create_runner_group" {
-  description = "Flag to determine whether to create a new runner group"
-  type        = bool
-  default     = false
+
+variable "runner_group" {
+  description = "Configuration for the GitHub runner group, including name, visibility, selected workflows, selected repository IDs, and whether public repositories are allowed."
+  default     = null
+  type = object({
+    name                       = string
+    visibility                 = optional(string, "selected")
+    selected_workflows         = optional(list(string), [])
+    selected_repository_ids    = optional(list(string), [])
+    allows_public_repositories = optional(bool, false)
+    create                     = optional(bool, false)
+  })
 
   validation {
-    condition     = var.create_runner_group == true || var.create_runner_group == false
+    condition     = can(regex("^[a-zA-Z0-9-_]+$", var.runner_group.name))
+    error_message = "The runner_group variable must not be empty and can only contain alphanumeric characters, hyphens, and underscores."
+  }
+
+  validation {
+    condition     = var.runner_group.allows_public_repositories == true || var.runner_group.allows_public_repositories == false
+    error_message = "The allows_public_repositories variable must be a boolean."
+  }
+
+  validation {
+    condition     = length(var.runner_group.selected_workflows) >= 0
+    error_message = "The selected_workflows variable must be null or a list of strings."
+  }
+
+  validation {
+    condition     = length(var.runner_group.selected_repository_ids) >= 0
+    error_message = "The selected_repository_ids variable must be a list of strings."
+  }
+
+  validation {
+    condition     = contains(["all", "selected"], var.runner_group.visibility)
+    error_message = "The visibility variable must be either 'all' or 'selected'."
+  }
+
+  validation {
+    condition     = var.runner_group.create == true || var.runner_group.create == false
     error_message = "The create_runner_group variable must be a boolean."
   }
 }
+

@@ -1,12 +1,12 @@
 
 resource "github_actions_runner_group" "example" {
-  count                      = var.runner_group == null && var.create_runner_group ? 0 : 1
+  count                      = var.runner_group == null && var.runner_group.create ? 0 : 1
   name                       = var.namespace
-  visibility                 = var.runner_group_visibility
-  selected_repository_ids    = var.selected_repository_ids
-  restricted_to_workflows    = var.selected_workflows == [] ? false : true
-  selected_workflows         = var.selected_workflows
-  allows_public_repositories = var.allows_public_repositories
+  visibility                 = var.runner_group.visibility
+  selected_repository_ids    = var.runner_group.selected_repository_ids
+  restricted_to_workflows    = var.runner_group.selected_workflows == [] ? false : true
+  selected_workflows         = var.runner_group.selected_workflows
+  allows_public_repositories = var.runner_group.allows_public_repositories
 }
 
 data "github_repository" "repo" {

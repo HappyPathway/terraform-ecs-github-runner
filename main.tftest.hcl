@@ -3,7 +3,10 @@ variables {
   hostname      = "test-hostname"
   image         = "test-image"
   namespace     = "test-namespace"
-  runner_group  = "test-runner-group"
+  runner_group  = {
+    name = "test-runner-group"
+    create = false
+  }
   runner_labels = ["test-runner-labels"]
   tag           = "test-tag"
   ecs_cluster   = "test-ecs-cluster"

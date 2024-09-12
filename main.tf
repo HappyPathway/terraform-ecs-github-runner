@@ -1,12 +1,16 @@
 locals {
-  environment = {
-    NAMESPACE     = var.namespace,
-    HOSTNAME      = var.hostname,
-    REPO_URL      = local.url,
-    ACCESS_TOKEN  = local.token,
-    RUNNER_GROUP  = var.runner_group.create ? "" : var.runner_group.name,
-    RUNNER_LABELS = join(",", var.runner_labels),
-  }
+  environment = merge({
+    NAMESPACE    = var.namespace,
+    HOSTNAME     = var.hostname,
+    REPO_URL     = local.url,
+    ACCESS_TOKEN = local.token,
+    },
+    var.runner_group.create ? {
+      RUNNER_GROUP = var.runner_group.name,
+    } : {},
+    {
+      RUNNER_LABELS = join(",", var.runner_labels),
+  })
   ecs_environment = jsonencode([for k, v in local.environment : { name = k, value = v }])
 }
 

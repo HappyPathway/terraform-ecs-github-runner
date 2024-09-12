@@ -1,5 +1,5 @@
 
-resource "github_actions_runner_group" "example" {
+resource "github_actions_runner_group" "runner_group" {
   count                      = var.runner_group.create ? 0 : 1
   name                       = var.namespace
   visibility                 = var.runner_group.visibility

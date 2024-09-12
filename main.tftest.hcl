@@ -10,7 +10,6 @@ variables {
   runner_labels = ["test-runner-labels"]
   tag           = "test-tag"
   ecs_cluster   = "test-ecs-cluster"
-  subnets       = ["subnet-12345678", "subnet-87654321"]
   repo_org      = "HappyPathway"
 }
 

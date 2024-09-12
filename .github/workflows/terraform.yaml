@@ -6,20 +6,23 @@ on:
   push:
     branches:
       - main
-    
+
 jobs:
   terraform:
-    uses: HappyPathway/centralized-actions/.github/workflows/terraform-test.yml@main
+    uses: HappyPathway/centralized-actions/.github/workflows/terraform-test.yml@aws-v1.0.0
     with:
       terraform_version: ${{vars.TERRAFORM_VERSION}}
       terraform_api: ${{vars.TERRAFORM_API}}
       github_username: ${{vars.GH_USERNAME}}
       github_email: ${{vars.GH_EMAIL}}
       github_org: ${{ vars.GH_ORG }}
+      aws_access_key_id: ${{ vars.AWS_ACCESS_KEY_ID }}
+      aws_region: us-west-2
     secrets:
       TFE_TOKEN: ${{ secrets.TFE_TOKEN }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
-
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
   gtag:
     if: ${{ github.event_name }} != "pull_request"
     needs: terraform

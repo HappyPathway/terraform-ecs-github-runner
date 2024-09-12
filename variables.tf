@@ -102,16 +102,6 @@ variable "ecs_cluster" {
   }
 }
 
-variable "subnets" {
-  description = "The list of subnets for the ECS service"
-  type        = list(string)
-
-  validation {
-    condition     = length(var.subnets) > 0
-    error_message = "The subnets variable must not be empty."
-  }
-}
-
 variable "desired_count" {
   description = "The desired number of tasks for the ECS service"
   type        = number

@@ -7,7 +7,7 @@ resource "aws_ecs_service" "github-runner" {
   cluster         = data.aws_ecs_cluster.runner_cluster.id
   task_definition = aws_ecs_task_definition.runner_task_definition.arn
   desired_count   = var.desired_count
-
+  launch_type     = "FARGATE"
   ordered_placement_strategy {
     type  = "binpack"
     field = "cpu"

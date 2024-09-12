@@ -28,13 +28,6 @@ resource "aws_iam_role" "ecs_task_role" {
       }
     ]
   })
-
-}
-
-resource "null_resource" "echo" {
-  provisioner "local-exec" {
-    command = "echo ${jsonencode(local.ecs_environment)} | jq"
-  }
 }
 
 resource "aws_iam_role" "ecs_task_execution_role" {

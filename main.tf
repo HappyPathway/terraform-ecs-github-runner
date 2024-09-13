@@ -4,10 +4,14 @@ locals {
     HOSTNAME                 = var.hostname,
     REPO_URL                 = local.url,
     ACCESS_TOKEN_SECRET_PATH = aws_secretsmanager_secret.secret.name,
+
     },
     var.runner_group.create ? {
       RUNNER_GROUP = var.runner_group.name,
     } : {},
+    var.certs == null ? {} : {
+      CERTS_PATH = "${var.certs.bucket}/${var.certs.key}",
+    },
     {
       RUNNER_LABELS = join(",", var.runner_labels),
   })

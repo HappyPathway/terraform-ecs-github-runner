@@ -157,12 +157,23 @@ variable "runner_group" {
   }
 }
 
-variable certs_bucket {
-  type = string
-}
+variable "certs" {
+  type = object({
+    bucket = string,
+    key    = string
+  })
 
-variable certs_key {
-  type = string
+  default = null
+
+  validation {
+    condition     = var.certs == null || can(regex("^[a-zA-Z0-9-]+$", var.certs.bucket)) || var.certs.bucket == null
+    error_message = "The certs_bucket variable must not be empty and can only contain alphanumeric characters and hyphens."
+  }
+
+  validation {
+    condition     = var.certs == null || can(regex("^[a-zA-Z0-9-_/]+$", var.certs.key)) || var.certs.key == null
+    error_message = "The certs_key variable must not be empty and can only contain alphanumeric characters, hyphens, and forward slashes."
+  }
 }
 
 variable "network_configuration" {

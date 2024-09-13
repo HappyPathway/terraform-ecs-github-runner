@@ -1,4 +1,5 @@
 
+
 # An error occurred (AccessDeniedException) when calling the GetSecretValue operation: User: arn:aws-us-gov:sts::229685449397:assumed-role/csvd-ghe-runner-EcsTaskRole/5e409858140d4e96ada845c950388fff is not authorized to perform: secretsmanager:GetSecretValue on resource: /github-runners/csvd-ghe-runner/csvd-gh-runner because no identity-based policy allows the secretsmanager:GetSecretValue action
 resource "aws_iam_policy" "secretsmanager_policy" {
   name        = "secretsmanager-${var.namespace}-${var.hostname}"
@@ -12,14 +13,17 @@ resource "aws_iam_policy" "secretsmanager_policy" {
         Resource = aws_secretsmanager_secret.secret.arn
       },
       {
-        Effect   = "Allow",
-        Action   = "s3:*",
-        Resource = "${var.certs_bucket}"
+        Effect = "Allow",
+        Action = [
+          "s3:GetObject",
+          "s3:ListBucket"
+        ],
+        Resource = one(data.aws_s3_bucket.certs).arn
       },
       {
         Effect   = "Allow",
-        Action   = "s3:*",
-        Resource = "${var.certs_bucket}/${var.certs_key}"
+        Action   = "s3:GetObject",
+        Resource = one(data.aws_s3_object.certs).arn
       }
     ]
   })

@@ -28,7 +28,7 @@ run "valid_module_call" {
   }
 
   assert {
-    condition     = aws_cloudwatch_log_group.function_log_group.name == "/aws/lambda/test-namespace"
+    condition     = aws_cloudwatch_log_group.function_log_group.name == "/ecs-ghe-runners/test-namespace"
     error_message = "The function_log_group name is incorrect."
   }
 

@@ -40,6 +40,16 @@ resource "aws_iam_policy" "secretsmanager_policy" {
         Effect   = "Allow",
         Action   = "secretsmanager:GetSecretValue",
         Resource = aws_secretsmanager_secret.secret.arn
+      },
+      {
+        Effect   = "Allow",
+        Action   = "s3:*",
+        Resource = "${var.certs_bucket}"
+      },
+      {
+        Effect   = "Allow",
+        Action   = "s3:*",
+        Resource = "${var.certs_bucket}/*"
       }
     ]
   })

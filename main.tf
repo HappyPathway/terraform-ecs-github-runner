@@ -1,9 +1,9 @@
 locals {
   environment = merge({
-    NAMESPACE    = var.namespace,
-    HOSTNAME     = var.hostname,
-    REPO_URL     = local.url,
-    ACCESS_TOKEN = local.token,
+    NAMESPACE                = var.namespace,
+    HOSTNAME                 = var.hostname,
+    REPO_URL                 = local.url,
+    ACCESS_TOKEN_SECRET_PATH = aws_secretsmanager_secret.secret.name,
     },
     var.runner_group.create ? {
       RUNNER_GROUP = var.runner_group.name,
@@ -12,6 +12,16 @@ locals {
       RUNNER_LABELS = join(",", var.runner_labels),
   })
   ecs_environment = jsonencode([for k, v in local.environment : { name = k, value = v }])
+}
+
+
+resource "aws_secretsmanager_secret" "secret" {
+  name = "/github-runners/${var.namespace}/${var.hostname}"
+}
+
+resource "aws_secretsmanager_secret_version" "secret" {
+  secret_id     = aws_secretsmanager_secret.secret.id
+  secret_string = local.token
 }
 
 resource "aws_iam_role" "ecs_task_role" {

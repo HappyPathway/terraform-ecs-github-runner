@@ -67,7 +67,7 @@ resource "aws_iam_role" "ecs_task_execution_role" {
 }
 
 resource "aws_cloudwatch_log_group" "function_log_group" {
-  name              = "/aws/lambda/${var.namespace}"
+  name              = "/ecs-ghe-runners/${var.namespace}"
   retention_in_days = 90
 }
 

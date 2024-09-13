@@ -169,10 +169,9 @@ variable "certs" {
     condition     = var.certs == null || can(regex("^[a-zA-Z0-9-]+$", var.certs.bucket))
     error_message = "The certs_bucket variable must not be empty and can only contain alphanumeric characters and hyphens."
   }
-
   validation {
-    condition     = var.certs == null || can(regex("^[a-zA-Z0-9-_/]+$", var.certs.key))
-    error_message = "The certs_key variable must not be empty and can only contain alphanumeric characters, hyphens, and forward slashes."
+    condition     = var.certs == null || can(regex("^[a-zA-Z0-9-_/.]+$", var.certs.key))
+    error_message = "The certs_key variable must not be empty and can only contain alphanumeric characters, hyphens, underscores, forward slashes, and dots."
   }
 }
 

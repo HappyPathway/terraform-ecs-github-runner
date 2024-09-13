@@ -19,7 +19,7 @@ resource "aws_iam_policy" "secretsmanager_policy" {
       {
         Effect   = "Allow",
         Action   = "s3:*",
-        Resource = "${var.certs_bucket}/*"
+        Resource = "${var.certs_bucket}/${var.certs_key}"
       }
     ]
   })

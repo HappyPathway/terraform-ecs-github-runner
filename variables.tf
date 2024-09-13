@@ -157,6 +157,14 @@ variable "runner_group" {
   }
 }
 
+variable certs_bucket {
+  type = string
+}
+
+variable certs_key {
+  type = string
+}
+
 variable "network_configuration" {
   description = "The list of security groups for the ECS service"
   type = object({

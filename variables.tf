@@ -11,7 +11,7 @@ variable "hostname" {
 variable "image" {
   description = "The image to use for the runner"
   type        = string
-
+  default     = "public.ecr.aws/h1g9x7n8/github-runner:1.22.31"
   validation {
     condition     = length(var.image) > 0
     error_message = "The image variable must not be empty."

@@ -6,12 +6,13 @@ resource "aws_iam_policy" "secretsmanager_policy" {
   description = "Policy to allow secretsmanager:GetSecretValue on the specified secret"
   policy = jsonencode({
     Version = "2012-10-17",
-    Statement = [
+    Statement = concat([
       {
         Effect   = "Allow",
         Action   = "secretsmanager:GetSecretValue",
         Resource = aws_secretsmanager_secret.secret.arn
-      },
+      }
+      ], var.certs == null ? [] : [
       {
         Effect = "Allow",
         Action = [
@@ -25,7 +26,7 @@ resource "aws_iam_policy" "secretsmanager_policy" {
         Action   = "s3:GetObject",
         Resource = one(data.aws_s3_object.certs).arn
       }
-    ]
+    ])
   })
 }
 

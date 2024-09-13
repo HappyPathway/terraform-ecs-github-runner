@@ -6,6 +6,6 @@
         "cpu": ${cpu},
         "memory": ${memory},
         "environment": ${environment},
-        "log_configuration": ${log_configuration}
+        "logConfiguration": ${log_configuration}
     }
 ]

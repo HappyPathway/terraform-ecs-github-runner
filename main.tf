@@ -22,6 +22,11 @@ resource "aws_secretsmanager_secret" "secret" {
 resource "aws_secretsmanager_secret_version" "secret" {
   secret_id     = aws_secretsmanager_secret.secret.id
   secret_string = local.token
+  lifecycle {
+    ignore_changes = [
+      secret_string
+    ]
+  }
 }
 
 # An error occurred (AccessDeniedException) when calling the GetSecretValue operation: User: arn:aws-us-gov:sts::229685449397:assumed-role/csvd-ghe-runner-EcsTaskRole/5e409858140d4e96ada845c950388fff is not authorized to perform: secretsmanager:GetSecretValue on resource: /github-runners/csvd-ghe-runner/csvd-gh-runner because no identity-based policy allows the secretsmanager:GetSecretValue action
@@ -93,15 +98,8 @@ resource "aws_cloudwatch_log_group" "function_log_group" {
   retention_in_days = 90
 }
 
-resource "aws_ecs_task_definition" "runner_task_definition" {
-  family                   = var.namespace
-  network_mode             = "awsvpc"
-  requires_compatibilities = ["FARGATE"]
-  cpu                      = var.cpu
-  memory                   = var.memory
-  task_role_arn            = aws_iam_role.ecs_task_role.arn
-  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
-  container_definitions = templatefile("${path.module}/container_definitions.json.tpl", {
+locals {
+  task_environment = templatefile("${path.module}/container_definitions.json.tpl", {
     name        = var.namespace
     image       = var.image
     essential   = true
@@ -117,4 +115,20 @@ resource "aws_ecs_task_definition" "runner_task_definition" {
       }
     })
   })
+}
+
+resource "local_file" "task_environment" {
+  filename = "${path.root}/task_environment.json"
+  content  = local.task_environment
+}
+
+resource "aws_ecs_task_definition" "runner_task_definition" {
+  family                   = var.namespace
+  network_mode             = "awsvpc"
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = var.cpu
+  memory                   = var.memory
+  task_role_arn            = aws_iam_role.ecs_task_role.arn
+  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  container_definitions    = local.task_environment
 }

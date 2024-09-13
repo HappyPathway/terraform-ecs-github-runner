@@ -48,6 +48,7 @@ resource "aws_iam_policy" "certs_policy" {
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_role_certs_policy_attachment" {
+  count      = var.certs == null ? 0 : 1
   role       = aws_iam_role.ecs_task_role.name
   policy_arn = one(aws_iam_policy.certs_policy).arn
 }

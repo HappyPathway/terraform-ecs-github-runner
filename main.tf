@@ -29,10 +29,6 @@ resource "aws_secretsmanager_secret_version" "secret" {
   }
 }
 
-locals {
-  secrets_arn = "arn:${data.aws_partition.current.partition}:secretsmanager:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:secret:/github-runners/${var.namespace}/${var.hostname}"
-}
-
 # An error occurred (AccessDeniedException) when calling the GetSecretValue operation: User: arn:aws-us-gov:sts::229685449397:assumed-role/csvd-ghe-runner-EcsTaskRole/5e409858140d4e96ada845c950388fff is not authorized to perform: secretsmanager:GetSecretValue on resource: /github-runners/csvd-ghe-runner/csvd-gh-runner because no identity-based policy allows the secretsmanager:GetSecretValue action
 resource "aws_iam_policy" "secretsmanager_policy" {
   name        = "secretsmanager-${var.namespace}-${var.hostname}"
@@ -43,7 +39,7 @@ resource "aws_iam_policy" "secretsmanager_policy" {
       {
         Effect   = "Allow",
         Action   = "secretsmanager:GetSecretValue",
-        Resource = local.secrets_arn
+        Resource = aws_secretsmanager_secret.secret.arn
       }
     ]
   })
@@ -119,11 +115,6 @@ locals {
       }
     })
   })
-}
-
-resource "local_file" "task_environment" {
-  filename = "${path.root}/task_environment.json"
-  content  = local.task_environment
 }
 
 resource "aws_ecs_task_definition" "runner_task_definition" {

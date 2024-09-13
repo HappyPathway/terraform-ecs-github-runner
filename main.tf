@@ -76,15 +76,8 @@ resource "aws_cloudwatch_log_group" "function_log_group" {
   retention_in_days = 90
 }
 
-resource "aws_ecs_task_definition" "runner_task_definition" {
-  family                   = var.namespace
-  network_mode             = "awsvpc"
-  requires_compatibilities = ["FARGATE"]
-  cpu                      = var.cpu
-  memory                   = var.memory
-  task_role_arn            = aws_iam_role.ecs_task_role.arn
-  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
-  container_definitions = templatefile("${path.module}/container_definitions.json.tpl", {
+locals {
+  task_environment = templatefile("${path.module}/container_definitions.json.tpl", {
     name        = var.namespace
     image       = var.image
     essential   = true
@@ -100,4 +93,20 @@ resource "aws_ecs_task_definition" "runner_task_definition" {
       }
     })
   })
+}
+
+resource local_file task_environment {
+  filename = "${path.root}/task_environment.json"
+  content = locals.task_environment
+}
+
+resource "aws_ecs_task_definition" "runner_task_definition" {
+  family                   = var.namespace
+  network_mode             = "awsvpc"
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = var.cpu
+  memory                   = var.memory
+  task_role_arn            = aws_iam_role.ecs_task_role.arn
+  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  container_definitions    = local.task_environment 
 }

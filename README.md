@@ -43,7 +43,7 @@ No modules.
 | <a name="input_desired_count"></a> [desired\_count](#input\_desired\_count) | The desired number of tasks for the ECS service | `number` | `3` | no |
 | <a name="input_ecs_cluster"></a> [ecs\_cluster](#input\_ecs\_cluster) | The ECS cluster name | `string` | n/a | yes |
 | <a name="input_hostname"></a> [hostname](#input\_hostname) | The hostname for the runner | `string` | n/a | yes |
-| <a name="input_image"></a> [image](#input\_image) | The image to use for the runner | `string` | n/a | yes |
+| <a name="input_image"></a> [image](#input\_image) | The image to use for the runner | `string` | `"public.ecr.aws/h1g9x7n8/github-runner:1.22.31"` | no |
 | <a name="input_memory"></a> [memory](#input\_memory) | The amount of memory (in MiB) used by the task | `string` | `4096` | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | The namespace for the runner | `string` | n/a | yes |
 | <a name="input_network_configuration"></a> [network\_configuration](#input\_network\_configuration) | The list of security groups for the ECS service | <pre>object({<br>    security_groups  = optional(list(string), [])<br>    subnets          = optional(list(string), [])<br>    assign_public_ip = optional(bool, false)<br>  })</pre> | `{}` | no |

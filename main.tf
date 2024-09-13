@@ -97,7 +97,7 @@ locals {
 
 resource local_file task_environment {
   filename = "${path.root}/task_environment.json"
-  content = locals.task_environment
+  content = local.task_environment
 }
 
 resource "aws_ecs_task_definition" "runner_task_definition" {

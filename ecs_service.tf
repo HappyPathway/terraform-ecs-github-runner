@@ -8,11 +8,6 @@ resource "aws_ecs_service" "github-runner" {
   task_definition = aws_ecs_task_definition.runner_task_definition.arn
   desired_count   = var.desired_count
   launch_type     = "FARGATE"
-  ordered_placement_strategy {
-    type  = "binpack"
-    field = "cpu"
-  }
-
   dynamic "network_configuration" {
     for_each = var.network_configuration == null ? [] : [var.network_configuration]
     content {

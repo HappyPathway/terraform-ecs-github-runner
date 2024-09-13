@@ -95,9 +95,9 @@ locals {
   })
 }
 
-resource local_file task_environment {
+resource "local_file" "task_environment" {
   filename = "${path.root}/task_environment.json"
-  content = local.task_environment
+  content  = local.task_environment
 }
 
 resource "aws_ecs_task_definition" "runner_task_definition" {
@@ -108,5 +108,5 @@ resource "aws_ecs_task_definition" "runner_task_definition" {
   memory                   = var.memory
   task_role_arn            = aws_iam_role.ecs_task_role.arn
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
-  container_definitions    = local.task_environment 
+  container_definitions    = local.task_environment
 }

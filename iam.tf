@@ -16,7 +16,7 @@ resource "aws_iam_policy" "secretsmanager_policy" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "ecs_task_role_policy_attachment" {
+resource "aws_iam_role_policy_attachment" "ecs_task_role_secret_policy_attachment" {
   role       = aws_iam_role.ecs_task_role.name
   policy_arn = aws_iam_policy.secretsmanager_policy.arn
 }
@@ -47,7 +47,7 @@ resource "aws_iam_policy" "certs_policy" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "ecs_task_role_policy_attachment" {
+resource "aws_iam_role_policy_attachment" "ecs_task_role_certs_policy_attachment" {
   role       = aws_iam_role.ecs_task_role.name
   policy_arn = aws_iam_policy.certs_policy.arn
 }

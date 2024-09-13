@@ -6,13 +6,30 @@ resource "aws_iam_policy" "secretsmanager_policy" {
   description = "Policy to allow secretsmanager:GetSecretValue on the specified secret"
   policy = jsonencode({
     Version = "2012-10-17",
-    Statement = concat([
+    Statement = [
       {
         Effect   = "Allow",
         Action   = "secretsmanager:GetSecretValue",
         Resource = aws_secretsmanager_secret.secret.arn
       }
-      ], var.certs == null ? [] : [
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_task_role_policy_attachment" {
+  role       = aws_iam_role.ecs_task_role.name
+  policy_arn = aws_iam_policy.secretsmanager_policy.arn
+}
+
+
+# An error occurred (AccessDenied) when calling the GetObject operation: Access Denied
+resource "aws_iam_policy" "certs_policy" {
+  name        = "s3-certs-${var.namespace}-${var.hostname}"
+  count       = var.certs == null ? 0 : 1
+  description = "Policy to allow secretsmanager:GetSecretValue on the specified secret"
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
       {
         Effect = "Allow",
         Action = [
@@ -26,15 +43,15 @@ resource "aws_iam_policy" "secretsmanager_policy" {
         Action   = "s3:GetObject",
         Resource = one(data.aws_s3_object.certs).arn
       }
-    ])
+    ]
   })
 }
 
-
 resource "aws_iam_role_policy_attachment" "ecs_task_role_policy_attachment" {
   role       = aws_iam_role.ecs_task_role.name
-  policy_arn = aws_iam_policy.secretsmanager_policy.arn
+  policy_arn = aws_iam_policy.certs_policy.arn
 }
+
 
 resource "aws_iam_role" "ecs_task_role" {
   name = "${var.namespace}-EcsTaskRole"

@@ -199,3 +199,8 @@ variable "network_configuration" {
     error_message = "The subnets variable contains an invalid subnet ID."
   }
 }
+
+variable github_runner_permissions_arn {
+  default = null
+  type = string
+}

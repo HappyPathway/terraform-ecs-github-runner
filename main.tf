@@ -36,7 +36,7 @@ resource "aws_secretsmanager_secret_version" "secret" {
 
 locals {
   task_environment = templatefile("${path.module}/container_definitions.json.tpl", {
-    name        = var.namespace
+    name        = var.hostname
     image       = var.image
     essential   = true
     cpu         = 2048

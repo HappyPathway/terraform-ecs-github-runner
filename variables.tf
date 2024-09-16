@@ -205,7 +205,8 @@ variable "github_runner_permissions_arn" {
   type    = string
 }
 
-variable "create_log_group" {
-  type    = bool
-  default = true
+variable log_group {
+  type = string
+  default = null
 }
+

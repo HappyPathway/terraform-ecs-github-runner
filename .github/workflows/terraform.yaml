@@ -24,7 +24,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       
   gtag:
-    if: ${{ github.event_name }} != "pull_request"
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: terraform
     uses: HappyPathway/centralized-actions/.github/workflows/gtag.yml@main
     with:

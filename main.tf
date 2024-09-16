@@ -34,14 +34,14 @@ resource "aws_secretsmanager_secret_version" "secret" {
 }
 
 resource "aws_cloudwatch_log_group" "function_log_group" {
-  count = var.create_log_group ? 1 : 0
+  count             = var.create_log_group ? 1 : 0
   name              = "/ecs-ghe-runners/${var.namespace}"
   retention_in_days = 90
 }
 
 data "aws_cloudwatch_log_group" "function_log_group" {
-   count = var.create_log_group ? 0 : 1
-   name              = "/ecs-ghe-runners/${var.namespace}"
+  count = var.create_log_group ? 0 : 1
+  name  = "/ecs-ghe-runners/${var.namespace}"
 }
 
 locals {

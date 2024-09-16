@@ -22,6 +22,13 @@ resource "aws_iam_role_policy_attachment" "ecs_task_role_secret_policy_attachmen
 }
 
 
+resource "aws_iam_role_policy_attachment" "github_runner_permissions" {
+  count      = var.github_runner_permissions_arn == null ? 0 : 1
+  role       = aws_iam_role.ecs_task_role.name
+  policy_arn = var.github_runner_permissions_arn
+}
+
+
 # An error occurred (AccessDenied) when calling the GetObject operation: Access Denied
 resource "aws_iam_policy" "certs_policy" {
   name        = "s3-certs-${var.namespace}-${var.hostname}"

@@ -18,7 +18,6 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [aws_cloudwatch_log_group.function_log_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
 | [aws_ecs_service.github-runner](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_service) | resource |
 | [aws_ecs_task_definition.runner_task_definition](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_task_definition) | resource |
 | [aws_iam_policy.certs_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
@@ -49,12 +48,12 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_certs"></a> [certs](#input\_certs) | n/a | <pre>object({<br>    bucket = string,<br>    key    = string<br>  })</pre> | `null` | no |
 | <a name="input_cpu"></a> [cpu](#input\_cpu) | The number of CPU units used by the task | `string` | `2048` | no |
-| <a name="input_create_log_group"></a> [create\_log\_group](#input\_create\_log\_group) | n/a | `bool` | `true` | no |
 | <a name="input_desired_count"></a> [desired\_count](#input\_desired\_count) | The desired number of tasks for the ECS service | `number` | `3` | no |
 | <a name="input_ecs_cluster"></a> [ecs\_cluster](#input\_ecs\_cluster) | The ECS cluster name | `string` | n/a | yes |
 | <a name="input_github_runner_permissions_arn"></a> [github\_runner\_permissions\_arn](#input\_github\_runner\_permissions\_arn) | n/a | `string` | `null` | no |
 | <a name="input_hostname"></a> [hostname](#input\_hostname) | The hostname for the runner | `string` | n/a | yes |
 | <a name="input_image"></a> [image](#input\_image) | The image to use for the runner | `string` | `"public.ecr.aws/h1g9x7n8/github-runner:1.22.31"` | no |
+| <a name="input_log_group"></a> [log\_group](#input\_log\_group) | n/a | `string` | `null` | no |
 | <a name="input_memory"></a> [memory](#input\_memory) | The amount of memory (in MiB) used by the task | `string` | `4096` | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | The namespace for the runner | `string` | n/a | yes |
 | <a name="input_network_configuration"></a> [network\_configuration](#input\_network\_configuration) | The list of security groups for the ECS service | <pre>object({<br>    security_groups  = optional(list(string), [])<br>    subnets          = optional(list(string), [])<br>    assign_public_ip = optional(bool, false)<br>  })</pre> | `{}` | no |

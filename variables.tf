@@ -205,8 +205,8 @@ variable "github_runner_permissions_arn" {
   type    = string
 }
 
-variable log_group {
-  type = string
+variable "log_group" {
+  type    = string
   default = null
 }
 

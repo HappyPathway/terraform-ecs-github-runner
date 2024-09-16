@@ -31,7 +31,7 @@ resource "aws_iam_role_policy_attachment" "github_runner_permissions" {
 
 # An error occurred (AccessDenied) when calling the GetObject operation: Access Denied
 resource "aws_iam_policy" "certs_policy" {
-  name        = "s3-certs-${var.namespace}-${var.hostname}"
+  name        = "s3-certs-${var.hostname}"
   count       = var.certs == null ? 0 : 1
   description = "Policy to allow secretsmanager:GetSecretValue on the specified secret"
   policy = jsonencode({
@@ -62,7 +62,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_role_certs_policy_attachment
 
 
 resource "aws_iam_role" "ecs_task_role" {
-  name = "${var.namespace}-${var.hostname}-task"
+  name = "${var.hostname}-task-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -82,7 +82,7 @@ resource "aws_iam_role" "ecs_task_role" {
 }
 
 resource "aws_iam_role" "ecs_task_execution_role" {
-  name = "${var.namespace}-${var.hostname}"
+  name = "${var.hostname}-task-execution-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"

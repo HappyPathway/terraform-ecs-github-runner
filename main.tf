@@ -39,7 +39,13 @@ resource "aws_cloudwatch_log_group" "function_log_group" {
   retention_in_days = 90
 }
 
+data "aws_cloudwatch_log_group" "function_log_group" {
+   count = var.create_log_group ? 0 : 1
+   name              = "/ecs-ghe-runners/${var.namespace}"
+}
+
 locals {
+  log_group = var.create_log_group ? aws_cloudwatch_log_group.function_log_group : data.aws_cloudwatch_log_group.function_log_group
   task_environment = templatefile("${path.module}/container_definitions.json.tpl", {
     name        = var.namespace
     image       = var.image
@@ -50,7 +56,7 @@ locals {
     log_configuration = jsonencode({
       logDriver = "awslogs"
       options = {
-        awslogs-group         = aws_cloudwatch_log_group.function_log_group.name
+        awslogs-group         = local.log_group.name
         awslogs-region        = data.aws_region.current.name
         awslogs-stream-prefix = var.tag
       }

@@ -45,7 +45,7 @@ data "aws_cloudwatch_log_group" "function_log_group" {
 }
 
 locals {
-  log_group = var.create_log_group ? aws_cloudwatch_log_group.function_log_group : data.aws_cloudwatch_log_group.function_log_group
+  log_group = var.create_log_group ? one(aws_cloudwatch_log_group.function_log_group) : one(data.aws_cloudwatch_log_group.function_log_group)
   task_environment = templatefile("${path.module}/container_definitions.json.tpl", {
     name        = var.namespace
     image       = var.image

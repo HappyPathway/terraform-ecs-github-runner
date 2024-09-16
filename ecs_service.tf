@@ -3,7 +3,7 @@ data "aws_ecs_cluster" "runner_cluster" {
 }
 
 resource "aws_ecs_service" "github-runner" {
-  name            = "github-runners-${var.namespace}"
+  name            = "${var.namespace}-${var.hostname}"
   cluster         = data.aws_ecs_cluster.runner_cluster.id
   task_definition = aws_ecs_task_definition.runner_task_definition.arn
   desired_count   = var.desired_count

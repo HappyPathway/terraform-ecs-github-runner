@@ -200,7 +200,7 @@ variable "network_configuration" {
   }
 }
 
-variable github_runner_permissions_arn {
+variable "github_runner_permissions_arn" {
   default = null
-  type = string
+  type    = string
 }

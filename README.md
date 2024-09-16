@@ -27,6 +27,7 @@ No modules.
 | [aws_iam_role.ecs_task_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role_policy_attachment.ecs_task_role_certs_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.ecs_task_role_secret_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.github_runner_permissions](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_secretsmanager_secret.secret](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret) | resource |
 | [aws_secretsmanager_secret_version.secret](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret_version) | resource |
 | [github_actions_runner_group.runner_group](https://registry.terraform.io/providers/hashicorp/github/latest/docs/resources/actions_runner_group) | resource |
@@ -50,6 +51,7 @@ No modules.
 | <a name="input_cpu"></a> [cpu](#input\_cpu) | The number of CPU units used by the task | `string` | `2048` | no |
 | <a name="input_desired_count"></a> [desired\_count](#input\_desired\_count) | The desired number of tasks for the ECS service | `number` | `3` | no |
 | <a name="input_ecs_cluster"></a> [ecs\_cluster](#input\_ecs\_cluster) | The ECS cluster name | `string` | n/a | yes |
+| <a name="input_github_runner_permissions_arn"></a> [github\_runner\_permissions\_arn](#input\_github\_runner\_permissions\_arn) | n/a | `string` | `null` | no |
 | <a name="input_hostname"></a> [hostname](#input\_hostname) | The hostname for the runner | `string` | n/a | yes |
 | <a name="input_image"></a> [image](#input\_image) | The image to use for the runner | `string` | `"public.ecr.aws/h1g9x7n8/github-runner:1.22.31"` | no |
 | <a name="input_memory"></a> [memory](#input\_memory) | The amount of memory (in MiB) used by the task | `string` | `4096` | no |

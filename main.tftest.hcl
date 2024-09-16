@@ -3,6 +3,7 @@ variables {
   hostname  = "test-hostname"
   image     = "test-image"
   namespace = "test-namespace"
+  log_group = "test-group"
   runner_group = {
     name   = "test-runner-group"
     create = false
@@ -25,11 +26,6 @@ run "valid_module_call" {
   assert {
     condition     = aws_iam_role.ecs_task_execution_role.name == "test-namespace-EcsTaskExecutionRole"
     error_message = "The ecs_task_execution_role name is incorrect."
-  }
-
-  assert {
-    condition     = aws_cloudwatch_log_group.function_log_group.name == "/ecs-ghe-runners/test-namespace"
-    error_message = "The function_log_group name is incorrect."
   }
 
   assert {

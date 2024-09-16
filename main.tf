@@ -18,7 +18,7 @@ locals {
   ecs_environment = jsonencode([for k, v in local.environment : { name = k, value = v }])
 }
 
-resource random_pet pet {}
+resource "random_pet" "pet" {}
 resource "aws_secretsmanager_secret" "secret" {
   name = "/github-runners/${var.namespace}/${var.hostname}-${random_pet.pet.id}"
 }

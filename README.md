@@ -9,6 +9,7 @@ No requirements.
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | 5.66.0 |
 | <a name="provider_github"></a> [github](#provider\_github) | 6.2.3 |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.6.3 |
 
 ## Modules
 
@@ -30,6 +31,7 @@ No modules.
 | [aws_secretsmanager_secret.secret](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret) | resource |
 | [aws_secretsmanager_secret_version.secret](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret_version) | resource |
 | [github_actions_runner_group.runner_group](https://registry.terraform.io/providers/hashicorp/github/latest/docs/resources/actions_runner_group) | resource |
+| [random_pet.pet](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) | resource |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 | [aws_ecs_cluster.runner_cluster](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ecs_cluster) | data source |
 | [aws_partition.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/partition) | data source |

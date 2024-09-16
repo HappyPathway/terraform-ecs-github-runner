@@ -49,6 +49,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_certs"></a> [certs](#input\_certs) | n/a | <pre>object({<br>    bucket = string,<br>    key    = string<br>  })</pre> | `null` | no |
 | <a name="input_cpu"></a> [cpu](#input\_cpu) | The number of CPU units used by the task | `string` | `2048` | no |
+| <a name="input_create_log_group"></a> [create\_log\_group](#input\_create\_log\_group) | n/a | `bool` | `true` | no |
 | <a name="input_desired_count"></a> [desired\_count](#input\_desired\_count) | The desired number of tasks for the ECS service | `number` | `3` | no |
 | <a name="input_ecs_cluster"></a> [ecs\_cluster](#input\_ecs\_cluster) | The ECS cluster name | `string` | n/a | yes |
 | <a name="input_github_runner_permissions_arn"></a> [github\_runner\_permissions\_arn](#input\_github\_runner\_permissions\_arn) | n/a | `string` | `null` | no |

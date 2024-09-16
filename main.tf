@@ -33,10 +33,6 @@ resource "aws_secretsmanager_secret_version" "secret" {
   }
 }
 
-resource "aws_cloudwatch_log_group" "function_log_group" {
-  name              = "/ecs-ghe-runners/${var.namespace}"
-  retention_in_days = 90
-}
 
 locals {
   task_environment = templatefile("${path.module}/container_definitions.json.tpl", {
@@ -49,7 +45,7 @@ locals {
     log_configuration = jsonencode({
       logDriver = "awslogs"
       options = {
-        awslogs-group         = aws_cloudwatch_log_group.function_log_group.name
+        awslogs-group         = var.log_group
         awslogs-region        = data.aws_region.current.name
         awslogs-stream-prefix = var.tag
       }

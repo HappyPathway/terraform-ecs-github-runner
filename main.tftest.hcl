@@ -19,12 +19,12 @@ run "valid_module_call" {
   command = plan
 
   assert {
-    condition     = aws_iam_role.ecs_task_role.name == "test-namespace-EcsTaskRole"
+    condition     = aws_iam_role.ecs_task_role.name == "test-namespace-test-hostname-EcsTaskRole"
     error_message = "The ecs_task_role name is incorrect."
   }
 
   assert {
-    condition     = aws_iam_role.ecs_task_execution_role.name == "test-namespace-EcsTaskExecutionRole"
+    condition     = aws_iam_role.ecs_task_execution_role.name == "test-namespace-test-hostname-EcsTaskExecutionRole"
     error_message = "The ecs_task_execution_role name is incorrect."
   }
 

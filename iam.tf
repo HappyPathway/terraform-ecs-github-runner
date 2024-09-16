@@ -62,7 +62,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_role_certs_policy_attachment
 
 
 resource "aws_iam_role" "ecs_task_role" {
-  name = "${var.namespace}-${var.hostname}-EcsTaskRole"
+  name = "${var.namespace}-${var.hostname}-task"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -82,7 +82,7 @@ resource "aws_iam_role" "ecs_task_role" {
 }
 
 resource "aws_iam_role" "ecs_task_execution_role" {
-  name = "${var.namespace}-${var.hostname}-EcsTaskExecutionRole"
+  name = "${var.namespace}-${var.hostname}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"

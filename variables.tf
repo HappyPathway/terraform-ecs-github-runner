@@ -210,3 +210,7 @@ variable "log_group" {
   default = null
 }
 
+variable server_url {
+  type = string
+  default = null
+}

@@ -27,14 +27,10 @@ data "github_organization" "org" {
   name = var.repo_org
 }
 
-data "github_rest_api" "org" {
-  endpoint = "orgs/${data.github_organization.org.name}"
-}
-
 locals {
   token = coalesce(
     one(data.github_actions_organization_registration_token.token),
     one(data.github_actions_registration_token.token)
   ).token
-  url = var.repo_name == null ? jsondecode(data.github_rest_api.org.body).html_url : one(data.github_repository.repo).html_url
+  url = var.repo_name == null ? "${var.server_url}/${data.github_organization.org.name}" : one(data.github_repository.repo).html_url
 }

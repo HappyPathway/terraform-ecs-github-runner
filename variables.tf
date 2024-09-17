@@ -212,5 +212,5 @@ variable "log_group" {
 
 variable server_url {
   type = string
-  default = null
+  default = ""
 }

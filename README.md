@@ -42,7 +42,6 @@ No modules.
 | [github_actions_registration_token.token](https://registry.terraform.io/providers/hashicorp/github/latest/docs/data-sources/actions_registration_token) | data source |
 | [github_organization.org](https://registry.terraform.io/providers/hashicorp/github/latest/docs/data-sources/organization) | data source |
 | [github_repository.repo](https://registry.terraform.io/providers/hashicorp/github/latest/docs/data-sources/repository) | data source |
-| [github_rest_api.org](https://registry.terraform.io/providers/hashicorp/github/latest/docs/data-sources/rest_api) | data source |
 
 ## Inputs
 
@@ -63,6 +62,7 @@ No modules.
 | <a name="input_repo_org"></a> [repo\_org](#input\_repo\_org) | The organization of the repository | `string` | `null` | no |
 | <a name="input_runner_group"></a> [runner\_group](#input\_runner\_group) | Configuration for the GitHub runner group, including name, visibility, selected workflows, selected repository IDs, and whether public repositories are allowed. | <pre>object({<br>    name                       = optional(string)<br>    visibility                 = optional(string, "selected")<br>    selected_workflows         = optional(list(string), [])<br>    selected_repository_ids    = optional(list(string), [])<br>    allows_public_repositories = optional(bool, false)<br>    create                     = optional(bool, false)<br>  })</pre> | `{}` | no |
 | <a name="input_runner_labels"></a> [runner\_labels](#input\_runner\_labels) | The labels for the runner | `list(string)` | n/a | yes |
+| <a name="input_server_url"></a> [server\_url](#input\_server\_url) | n/a | `string` | `""` | no |
 | <a name="input_tag"></a> [tag](#input\_tag) | The tag for the runner | `string` | n/a | yes |
 
 ## Outputs

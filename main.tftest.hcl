@@ -29,7 +29,7 @@ run "valid_module_call" {
   }
 
   assert {
-    condition     = aws_ecs_task_definition.runner_task_definition.family == "est-namespace-test-hostname"
+    condition     = aws_ecs_task_definition.runner_task_definition.family == "test-namespace-test-hostname"
     error_message = "The runner_task_definition family is incorrect."
   }
 }

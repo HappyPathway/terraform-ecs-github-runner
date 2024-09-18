@@ -32,5 +32,5 @@ locals {
     one(data.github_actions_organization_registration_token.token),
     one(data.github_actions_registration_token.token)
   ).token
-  url = var.repo_name == null ? "${var.server_url}/${data.github_organization.org.name}" : one(data.github_repository.repo).html_url
+  url = var.repo_name == null ? "${var.server_url}/${var.repo_org}" : one(data.github_repository.repo).html_url
 }

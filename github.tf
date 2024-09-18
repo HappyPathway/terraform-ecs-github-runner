@@ -1,7 +1,7 @@
 
 resource "github_actions_runner_group" "runner_group" {
   count                      = var.runner_group.create ? 1 : 0
-  name                       = var.namespace
+  name                       = var.runner_group.name
   visibility                 = var.runner_group.visibility
   selected_repository_ids    = var.runner_group.selected_repository_ids
   restricted_to_workflows    = var.runner_group.selected_workflows == [] ? false : true

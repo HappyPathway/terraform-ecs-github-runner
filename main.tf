@@ -54,7 +54,7 @@ locals {
 }
 
 resource "aws_ecs_task_definition" "runner_task_definition" {
-  family                   = var.namespace
+  family                   = "${var.namespace}-${var.hostname}"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = var.cpu

@@ -23,7 +23,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_role_secret_policy_attachmen
 
 
 resource "aws_iam_role_policy_attachment" "github_runner_permissions" {
-  count      = var.github_runner_permissions_arn == null ? 0 : 1
+  for_each   = toset(compact([var.github_runner_permissions_arn]))
   role       = aws_iam_role.ecs_task_role.name
   policy_arn = var.github_runner_permissions_arn
 }

@@ -17,7 +17,7 @@ jobs:
       github_email: ${{vars.GH_EMAIL}}
       github_org: ${{ vars.GH_ORG }}
       aws_access_key_id: ${{ vars.AWS_ACCESS_KEY_ID }}
-      aws_region: us-east-1
+      aws_region: us-west-2
     secrets:
       TFE_TOKEN: ${{ secrets.TFE_TOKEN }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}

@@ -201,16 +201,50 @@ variable "network_configuration" {
 }
 
 variable "github_runner_permissions_arn" {
-  default = null
-  type    = string
+  description = "The ARN of the IAM role with permissions for the GitHub runner"
+  type        = string
+  default     = null
+
+  validation {
+    condition     = var.github_runner_permissions_arn == null || can(regex("^arn:(aws|aws-us-gov|aws-cn):iam::[0-9]{12}:role/.+$", var.github_runner_permissions_arn))
+    error_message = "The github_runner_permissions_arn must be a valid IAM role ARN in the correct partition (aws, aws-us-gov, aws-cn)."
+  }
 }
 
 variable "log_group" {
-  type    = string
-  default = null
+  description = "The name of the CloudWatch log group"
+  type        = string
+  default     = null
+
+  validation {
+    condition     = var.log_group == null || can(regex("^[a-zA-Z0-9-_/.]+$", var.log_group))
+    error_message = "The log_group must be a valid CloudWatch log group name containing only alphanumeric characters, hyphens, underscores, forward slashes, and periods."
+  }
 }
 
 variable "server_url" {
-  type    = string
-  default = ""
+  description = "The URL of the GitHub server"
+  type        = string
+  default     = ""
+
+  validation {
+    condition     = var.server_url == "" || can(regex("^(https?|git)://[a-zA-Z0-9-._~:/?#@!$&'()*+,;=%]+$", var.server_url))
+    error_message = "The server_url must be a valid URL."
+  }
+}
+
+variable "extra_environment_vars" {
+  description = "Additional environment variables to inject into the container definition"
+  type        = map(string)
+  default     = {}
+
+  validation {
+    condition     = alltrue([for k, v in var.extra_environment_vars : can(regex("^[a-zA-Z_][a-zA-Z0-9_]*$", k))])
+    error_message = "All keys in extra_environment_vars must be valid environment variable names (alphanumeric characters and underscores, starting with a letter or underscore)."
+  }
+
+  validation {
+    condition     = alltrue([for k, v in var.extra_environment_vars : can(regex("^[^\\x00-\\x1F\\x7F]*$", v))])
+    error_message = "All values in extra_environment_vars must be valid strings without control characters."
+  }
 }

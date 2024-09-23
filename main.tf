@@ -14,7 +14,8 @@ locals {
     },
     {
       RUNNER_LABELS = join(",", var.runner_labels),
-  })
+    },
+  var.extra_environment_vars)
   ecs_environment = jsonencode([for k, v in local.environment : { name = k, value = v }])
 }
 

@@ -51,10 +51,11 @@ No modules.
 | <a name="input_cpu"></a> [cpu](#input\_cpu) | The number of CPU units used by the task | `string` | `2048` | no |
 | <a name="input_desired_count"></a> [desired\_count](#input\_desired\_count) | The desired number of tasks for the ECS service | `number` | `3` | no |
 | <a name="input_ecs_cluster"></a> [ecs\_cluster](#input\_ecs\_cluster) | The ECS cluster name | `string` | n/a | yes |
-| <a name="input_github_runner_permissions_arn"></a> [github\_runner\_permissions\_arn](#input\_github\_runner\_permissions\_arn) | n/a | `string` | `null` | no |
+| <a name="input_extra_environment_vars"></a> [extra\_environment\_vars](#input\_extra\_environment\_vars) | Additional environment variables to inject into the container definition | `map(string)` | `{}` | no |
+| <a name="input_github_runner_permissions_arn"></a> [github\_runner\_permissions\_arn](#input\_github\_runner\_permissions\_arn) | The ARN of the IAM role with permissions for the GitHub runner | `string` | `null` | no |
 | <a name="input_hostname"></a> [hostname](#input\_hostname) | The hostname for the runner | `string` | n/a | yes |
 | <a name="input_image"></a> [image](#input\_image) | The image to use for the runner | `string` | `"public.ecr.aws/h1g9x7n8/github-runner:1.22.31"` | no |
-| <a name="input_log_group"></a> [log\_group](#input\_log\_group) | n/a | `string` | `null` | no |
+| <a name="input_log_group"></a> [log\_group](#input\_log\_group) | The name of the CloudWatch log group | `string` | `null` | no |
 | <a name="input_memory"></a> [memory](#input\_memory) | The amount of memory (in MiB) used by the task | `string` | `4096` | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | The namespace for the runner | `string` | n/a | yes |
 | <a name="input_network_configuration"></a> [network\_configuration](#input\_network\_configuration) | The list of security groups for the ECS service | <pre>object({<br>    security_groups  = optional(list(string), [])<br>    subnets          = optional(list(string), [])<br>    assign_public_ip = optional(bool, false)<br>  })</pre> | `{}` | no |
@@ -62,7 +63,7 @@ No modules.
 | <a name="input_repo_org"></a> [repo\_org](#input\_repo\_org) | The organization of the repository | `string` | `null` | no |
 | <a name="input_runner_group"></a> [runner\_group](#input\_runner\_group) | Configuration for the GitHub runner group, including name, visibility, selected workflows, selected repository IDs, and whether public repositories are allowed. | <pre>object({<br>    name                       = optional(string)<br>    visibility                 = optional(string, "selected")<br>    selected_workflows         = optional(list(string), [])<br>    selected_repository_ids    = optional(list(string), [])<br>    allows_public_repositories = optional(bool, false)<br>    create                     = optional(bool, false)<br>  })</pre> | `{}` | no |
 | <a name="input_runner_labels"></a> [runner\_labels](#input\_runner\_labels) | The labels for the runner | `list(string)` | n/a | yes |
-| <a name="input_server_url"></a> [server\_url](#input\_server\_url) | n/a | `string` | `""` | no |
+| <a name="input_server_url"></a> [server\_url](#input\_server\_url) | The URL of the GitHub server | `string` | `""` | no |
 | <a name="input_tag"></a> [tag](#input\_tag) | The tag for the runner | `string` | n/a | yes |
 
 ## Outputs

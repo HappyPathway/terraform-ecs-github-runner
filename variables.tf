@@ -206,8 +206,8 @@ variable "github_runner_permissions_arn" {
   default     = null
 
   validation {
-    condition     = var.github_runner_permissions_arn == null || can(regex("^arn:(aws|aws-us-gov|aws-cn):iam::[0-9]{12}:role/.+$", var.github_runner_permissions_arn))
-    error_message = "The github_runner_permissions_arn must be a valid IAM role ARN in the correct partition (aws, aws-us-gov, aws-cn)."
+    condition     = var.github_runner_permissions_arn == null || can(regex("^arn:(aws|aws-us-gov|aws-cn):iam::[0-9]{12}:policy/.+$", var.github_runner_permissions_arn))
+    error_message = "The github_runner_permissions_arn must be a valid IAM policy ARN in the correct partition (aws, aws-us-gov, aws-cn)."
   }
 }
 

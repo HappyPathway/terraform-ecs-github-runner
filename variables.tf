@@ -121,6 +121,7 @@ variable "runner_group" {
     name                       = optional(string)
     visibility                 = optional(string, "selected")
     selected_workflows         = optional(list(string), [])
+    restricted_to_workflows    = optional(bool, false)
     selected_repository_ids    = optional(list(string), [])
     allows_public_repositories = optional(bool, false)
     create                     = optional(bool, false)

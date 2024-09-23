@@ -4,7 +4,7 @@ resource "github_actions_runner_group" "runner_group" {
   name                       = var.runner_group.name
   visibility                 = var.runner_group.visibility
   selected_repository_ids    = var.runner_group.selected_repository_ids
-  restricted_to_workflows    = var.runner_group.selected_workflows == [] ? false : true
+  restricted_to_workflows    = var.runner_group.restricted_to_workflows
   selected_workflows         = var.runner_group.selected_workflows
   allows_public_repositories = var.runner_group.allows_public_repositories
 }
